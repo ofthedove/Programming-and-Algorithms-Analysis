@@ -31,8 +31,13 @@ namespace InsertionSort
                     SortBubble(data);
                     break;
                 case sortAlgos.Merge:
-                    SortMerge(data);
+                    data = SortMerge(data);
                     break;
+            }
+
+            foreach (float item in data)
+            {
+                System.Console.WriteLine(item);
             }
         }
 
@@ -117,17 +122,95 @@ namespace InsertionSort
 
         private static void SortInsertion(List<float> data)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < data.Count; i++)
+            {
+                for (int j = i; j > 0 && (data[j - 1] > data[j]); j--)
+                {
+                    float tmp = data[j];
+                    data[j] = data[j - 1];
+                    data[j - 1] = tmp;
+                }
+            }
         }
 
         private static void SortBubble(List<float> data)
         {
-            throw new NotImplementedException();
+            while (true)
+            {
+                bool noSwaps = true;
+
+                for (int i = 1; i < data.Count; i++)
+                {
+                    if (data[i - 1] > data[i])
+                    {
+                        float tmp = data[i];
+                        data[i] = data[i - 1];
+                        data[i - 1] = tmp;
+                        noSwaps = false;
+                    }
+                }
+
+                if (noSwaps)
+                {
+                    break;
+                }
+            }
         }
 
-        private static void SortMerge(List<float> data)
+        private static List<float> SortMerge(List<float> data)
         {
-            throw new NotImplementedException();
+            if (data.Count <= 1)
+            {
+                return data;
+            }
+
+            List<float> left = new List<float>();
+            List<float> right = new List<float>();
+            for (int i = 0; i < data.Count / 2; i++)
+            {
+                left.Add(data[i]);
+            }
+            for (int i = data.Count / 2; i < data.Count; i++)
+            {
+                right.Add(data[i]);
+            }
+
+            left = SortMerge(left);
+            right = SortMerge(right);
+
+            return Merge(left, right);
+        }
+
+        static List<float> Merge(List<float> left, List<float> right)
+        {
+            List<float> result = new List<float>();
+
+            while (left.Count > 0 && right.Count > 0)
+            {
+                if (left[0] < right[0])
+                {
+                    result.Add(left[0]);
+                    left.RemoveAt(0);
+                }
+                else
+                {
+                    result.Add(right[0]);
+                    right.RemoveAt(0);
+                }
+            }
+
+            while (left.Count > 0)
+            {
+                result.Add(left[0]);
+                left.RemoveAt(0);
+            }
+            while (right.Count > 0)
+            {
+                result.Add(right[0]);
+                right.RemoveAt(0);
+            }
+
+            return result;
         }
     }
 }
