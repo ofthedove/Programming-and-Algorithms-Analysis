@@ -33,10 +33,10 @@ public class Main {
             	break;
         }
 
-		for (Iterator<Float> i = data.iterator(); i.hasNext();) {
+		/*for (Iterator<Float> i = data.iterator(); i.hasNext();) {
 		    Float item = i.next();
 		    System.out.println(item);
-		}
+		}*/
 	}
 	
     private static sortAlgos ParseCmdArgSort(String args[])

@@ -35,10 +35,10 @@ namespace InsertionSort
                     break;
             }
 
-            foreach (float item in data)
+            /*foreach (float item in data)
             {
                 System.Console.WriteLine(item);
-            }
+            }*/
         }
 
         static bool ParseCmdArgs(string[] args, out sortAlgos sortAlgo, out string inputPath)

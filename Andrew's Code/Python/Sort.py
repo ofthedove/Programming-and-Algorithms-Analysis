@@ -110,5 +110,5 @@ elif (sortAlgo == sortAlgos.bubble):
 elif (sortAlgo == sortAlgos.merge):
     data = mergeSort(data)
 
-for x in range(0, len(data)):
-    print(data[x])
+#for x in range(0, len(data)):
+#    print(data[x])
