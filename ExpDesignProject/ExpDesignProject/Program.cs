@@ -9,74 +9,54 @@ namespace ExpDesignProject
 {
     class Program
     {
+        enum sortAlgos { Insertion, Bubble, Selection, Merge, NotYetSet };
         enum Programmers { Andrew, Cody };
         enum Langs { Java, CSharp, Python };
-        enum sortAlgos { NotYetSet, Insertion, Bubble, Merge, Selection };
 
         const string inputPath = "\"C:\\Users\\andre\\classes\\IE 563 Experimental Design\\Project\\Source\\numbers10k.txt\"";
         const string andrewCodePath = "\"C:\\Users\\andre\\classes\\IE 563 Experimental Design\\Project\\Source\\Andrew's Code\\";
         const string codyCodePath = "\"C:\\Users\\andre\\classes\\IE 563 Experimental Design\\Project\\Source\\Cody's Code\\";
 
+        const int numIterations = 3;
+
         static void Main(string[] args)
         {
-            for (int i = 0; i < 5; i++)
+            Random rand = new Random();
+
+            int[,,] numTimesRun = new int[3, 2, 3];
+
+            System.Console.WriteLine("algo\tprog\tlang\tresult");
+
+            while (!Finished(numTimesRun, numIterations))
             {
-                System.Console.WriteLine("##### Iteration " + i);
-                System.Console.WriteLine("## Insertion");
+                int algoNum;
+                int progNum;
+                int langNum;
 
-                System.Console.WriteLine("- Andrew");
-                System.Console.Write("Java  \t");
-                System.Console.WriteLine(RunSort(Programmers.Andrew, Langs.Java, sortAlgos.Insertion, inputPath));
-                System.Console.Write("CSharp\t");
-                System.Console.WriteLine(RunSort(Programmers.Andrew, Langs.CSharp, sortAlgos.Insertion, inputPath));
-                System.Console.Write("Python\t");
-                System.Console.WriteLine(RunSort(Programmers.Andrew, Langs.Python, sortAlgos.Insertion, inputPath));
+                // Generate values randomly, ignoring them if they've already been done
+                do
+                {
+                    algoNum = rand.Next(0, 3);
+                    progNum = rand.Next(0, 2);
+                    langNum = rand.Next(0, 3);
+                } while (ComboDone(numTimesRun, numIterations, algoNum, progNum, langNum));
 
-                System.Console.WriteLine("- Cody");
-                System.Console.Write("Java  \t");
-                System.Console.WriteLine(RunSort(Programmers.Cody, Langs.Java, sortAlgos.Insertion, inputPath));
-                System.Console.Write("CSharp\t");
-                System.Console.WriteLine(RunSort(Programmers.Cody, Langs.CSharp, sortAlgos.Insertion, inputPath));
-                System.Console.Write("Python\t");
-                System.Console.WriteLine(RunSort(Programmers.Cody, Langs.Python, sortAlgos.Insertion, inputPath));
+                numTimesRun[algoNum, progNum, langNum]++;
 
-                System.Console.WriteLine("## Bubble");
+                sortAlgos algo = (sortAlgos)algoNum;
+                Programmers prog = (Programmers)progNum;
+                Langs lang = (Langs)langNum;
 
-                System.Console.WriteLine("- Andrew");
-                System.Console.Write("Java  \t");
-                System.Console.WriteLine(RunSort(Programmers.Andrew, Langs.Java, sortAlgos.Bubble, inputPath));
-                System.Console.Write("CSharp\t");
-                System.Console.WriteLine(RunSort(Programmers.Andrew, Langs.CSharp, sortAlgos.Bubble, inputPath));
-                System.Console.Write("Python\t");
-                System.Console.WriteLine(RunSort(Programmers.Andrew, Langs.Python, sortAlgos.Bubble, inputPath));
+                long result = RunSort(prog, lang, algo, inputPath);
 
-                System.Console.WriteLine("- Cody");
-                System.Console.Write("Java  \t");
-                System.Console.WriteLine(RunSort(Programmers.Cody, Langs.Java, sortAlgos.Bubble, inputPath));
-                System.Console.Write("CSharp\t");
-                System.Console.WriteLine(RunSort(Programmers.Cody, Langs.CSharp, sortAlgos.Bubble, inputPath));
-                System.Console.Write("Python\t");
-                System.Console.WriteLine(RunSort(Programmers.Cody, Langs.Python, sortAlgos.Bubble, inputPath));
-
-                System.Console.WriteLine("## Selection");
-
-                System.Console.WriteLine("- Andrew");
-                System.Console.Write("Java  \t");
-                System.Console.WriteLine(RunSort(Programmers.Andrew, Langs.Java, sortAlgos.Selection, inputPath));
-                System.Console.Write("CSharp\t");
-                System.Console.WriteLine(RunSort(Programmers.Andrew, Langs.CSharp, sortAlgos.Selection, inputPath));
-                System.Console.Write("Python\t");
-                System.Console.WriteLine(RunSort(Programmers.Andrew, Langs.Python, sortAlgos.Selection, inputPath));
-
-                System.Console.WriteLine("- Cody");
-                System.Console.Write("Java  \t");
-                System.Console.WriteLine(RunSort(Programmers.Cody, Langs.Java, sortAlgos.Selection, inputPath));
-                System.Console.Write("CSharp\t");
-                System.Console.WriteLine(RunSort(Programmers.Cody, Langs.CSharp, sortAlgos.Selection, inputPath));
-                System.Console.Write("Python\t");
-                System.Console.WriteLine(RunSort(Programmers.Cody, Langs.Python, sortAlgos.Selection, inputPath));
+                System.Console.Write(algo.ToString() + "\t");
+                System.Console.Write(prog.ToString() + "\t");
+                System.Console.Write(lang.ToString() + "\t");
+                System.Console.WriteLine(result);
             }
 
+            System.Console.ReadKey();
+            System.Console.ReadKey();
             System.Console.ReadKey();
         }
 
@@ -203,6 +183,39 @@ namespace ExpDesignProject
             }
 
             return "";
+        }
+
+        private static bool Finished(int[,,] arr, int num)
+        {
+            bool finished = true;
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+                    for (int k = 0; k < arr.GetLength(2); k++)
+                    {
+                        if (arr[i, j, k] != num)
+                        {
+                            finished = false;
+                        }
+                    }
+                }
+            }
+
+            return finished;
+        }
+
+        private static bool ComboDone(int[,,] arr, int num, int algoNum, int progNum, int langNum)
+        {
+            if (arr[algoNum, progNum, langNum] >= num)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
