@@ -16,7 +16,7 @@ def verify(numbers):
 		else:
 			if n < x:
 				print("Not sorted")
-		print(n)
+		#print(n)
 		x = n
 
 def insertion_sort(numbers):
@@ -83,6 +83,24 @@ def merge_sort(numbers, left, right):
 		merge_sort(numbers, left, middle)
 		merge_sort(numbers, middle+1, right)
 		merge(numbers, left, middle, right)
+		
+def select_sort(numbers):
+	i = 0
+	j = 0
+	min = 0
+	while j < len(numbers) - 1:
+		min = j
+		i = j + 1
+		while i < len(numbers):
+			if numbers[i] < numbers[min]:
+				min = i
+			i += 1
+		if min != j:
+			#swap(a[j], a[iMin])
+			x = numbers[j]
+			numbers[j] = numbers[min]
+			numbers[min] = x
+		j += 1
 
 def bubble_sort(numbers):
 	swapped = True
@@ -114,7 +132,7 @@ def main():
 		bubble_sort(nums)
 		verify(nums)
 	elif algorithm == 3:
-		merge_sort(nums, 0, len(nums) - 1)
+		select_sort(nums)
 		verify(nums)
 	else:
 		print("Invalid algorithm")

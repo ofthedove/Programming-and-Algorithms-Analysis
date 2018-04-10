@@ -54,7 +54,7 @@ public class Program {
                 }
 
             }
-            System.out.println(nums.get(i).toString());
+            //System.out.println(nums.get(i).toString());
             x = nums.get(i);
         }
     }
@@ -166,6 +166,29 @@ public class Program {
         return numbers;
     }
 	
+	private static ArrayList<Float> selection_sort(ArrayList<Float> numbers)
+    {
+        int i, j;
+        int min;
+        for (j = 0; j < numbers.size() - 1; j++)
+        {
+            min = j;
+            for (i = j + 1; i < numbers.size(); i++)
+            {
+                if (numbers.get(i) < numbers.get(min))
+                {
+                    min = i;
+                }
+            }
+
+            if (min != j)
+            {
+            	Collections.swap(numbers, j, min);
+            }
+        }
+        return numbers;
+    }
+	
 	public static void main(String[] args) { 
         ArrayList<Float> numbers = new ArrayList<Float>();
         
@@ -200,7 +223,7 @@ public class Program {
                 verify(numbers);
         		break;
         	case 3:
-        		merge_sort(numbers, 0, numbers.size() - 1);
+        		selection_sort(numbers);
                 verify(numbers);
         		break;
         	default:

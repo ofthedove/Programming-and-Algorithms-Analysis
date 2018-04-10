@@ -18,12 +18,13 @@ namespace SortProject
                 StreamReader file = new StreamReader(filename);
                 while ((line = file.ReadLine()) != null)
                 {
-                    nums.Add(Convert.ToInt32(line));
+                    nums.Add(Convert.ToSingle(line));
                 }
             }
-            catch(Exception)
+            catch(Exception e)
             {
                 Console.WriteLine("Cannot open file " + filename);
+                Console.WriteLine(e.Message);
             }
             return nums;
         }
@@ -46,7 +47,7 @@ namespace SortProject
                     }
 
                 }
-                Console.WriteLine(i.ToString());
+                //Console.WriteLine(i.ToString());
                 x = i;
             }
         }
@@ -163,6 +164,31 @@ namespace SortProject
             return numbers;
         }
 
+        private static List<float> selection_sort(List<float> numbers)
+        {
+            int i, j;
+            int min;
+            for (j = 0; j < numbers.Count - 1; j++)
+            {
+                min = j;
+                for (i = j + 1; i < numbers.Count; i++)
+                {
+                    if (numbers[i] < numbers[min])
+                    {
+                        min = i;
+                    }
+                }
+
+                if (min != j)
+                {
+                    float x = numbers[j];
+                    numbers[j] = numbers[min];
+                    numbers[min] = x;
+                }
+            }
+            return numbers;
+        }
+
         static void Main(string[] args)
         {
             List<float> nums;
@@ -196,7 +222,7 @@ namespace SortProject
                     verify(nums);
                     break;
                 case 3:
-                    merge_sort(nums, 0, nums.Count - 1);
+                    selection_sort(nums);
                     verify(nums);
                     break;
                 default:
