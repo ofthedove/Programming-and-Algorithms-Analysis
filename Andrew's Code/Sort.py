@@ -3,7 +3,7 @@ from enum import Enum
 import os.path
 import math
 
-sortAlgos = Enum("sortAlgos", "insertion bubble merge")
+sortAlgos = Enum("sortAlgos", "insertion bubble merge selection")
 
 def insertionSort(data):
     for i in range(0, len(data)):
@@ -69,6 +69,22 @@ def merge(left, right):
 
     return result
 
+def selectionSort(data):
+    sortedList = list()
+
+    while len(data) > 0:
+        minIndex = 0
+        min = data[minIndex]
+        for x in range(1, len(data)):
+            if data[x] < min:
+                minIndex = x
+                min = data[minIndex]
+        
+        sortedList.append(data[minIndex])
+        del data[minIndex]
+    
+    return sortedList
+
 # Main entry point
 if (len(sys.argv) < 2):
     print("Requires two arguments, only " + str(len(sys.argv)) + " provided")
@@ -86,6 +102,8 @@ elif (argAlgo == "bubble"):
     sortAlgo = sortAlgos.bubble
 elif (argAlgo == "merge"):
     sortAlgo = sortAlgos.merge
+elif (argAlgo == "selection"):
+    sortAlgo = sortAlgos.selection
 else:
     print(argAlgo + " is not a valid sorting algorithm.")
     print("Correct Usage: Sort [insertion/bubble/merge] [C:\\Path\\To\\Input.file]")
@@ -109,6 +127,8 @@ elif (sortAlgo == sortAlgos.bubble):
     bubbleSort(data)
 elif (sortAlgo == sortAlgos.merge):
     data = mergeSort(data)
+elif (sortAlgo == sortAlgos.selection):
+    data = selectionSort(data)
 
 #for x in range(0, len(data)):
 #    print(data[x])

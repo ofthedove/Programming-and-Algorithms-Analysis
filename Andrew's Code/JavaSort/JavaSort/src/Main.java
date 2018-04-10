@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class Main {
-    enum sortAlgos { NotYetSet, Insertion, Bubble, Merge };
+    enum sortAlgos { NotYetSet, Insertion, Bubble, Merge, Selection };
 
 	public static void main(String[] args) {
         sortAlgos sortAlgo = ParseCmdArgSort(args);
@@ -28,6 +28,9 @@ public class Main {
                 break;
             case Merge:
                 data = SortMerge(data);
+                break;
+            case Selection:
+                data = SortSelection(data);
                 break;
             default:
             	break;
@@ -62,6 +65,8 @@ public class Main {
                 break;
             case "merge":
                 sortAlgo = sortAlgos.Merge;
+            case "selection":
+                sortAlgo = sortAlgos.Selection;
                 break;
             default:
                 System.out.println(argAlgo + " is not a valid sorting algorithm.");
@@ -214,5 +219,29 @@ public class Main {
         }
 
         return result;
+    }
+
+    private static ArrayList<Float> SortSelection(ArrayList<Float> data)
+    {
+    	ArrayList<Float> sortedList = new ArrayList<Float>();
+
+        while (data.size() > 0)
+        {
+            int minIndex = 0;
+            float min = data.get(minIndex);
+            for (int i = 1; i < data.size(); i++)
+            {
+                if (data.get(i) < min)
+                {
+                    minIndex = i;
+                    min = data.get(minIndex);
+                }
+            }
+
+            sortedList.add(data.get(minIndex));
+            data.remove(minIndex);
+        }
+
+        return sortedList;
     }
 }

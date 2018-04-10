@@ -9,7 +9,7 @@ namespace InsertionSort
 {
     class Program
     {
-        enum sortAlgos { NotYetSet, Insertion, Bubble, Merge };
+        enum sortAlgos { NotYetSet, Insertion, Bubble, Merge, Selection };
 
         static void Main(string[] args)
         {
@@ -32,6 +32,9 @@ namespace InsertionSort
                     break;
                 case sortAlgos.Merge:
                     data = SortMerge(data);
+                    break;
+                case sortAlgos.Selection:
+                    data = SortSelection(data);
                     break;
             }
 
@@ -66,6 +69,9 @@ namespace InsertionSort
                     break;
                 case "merge":
                     sortAlgo = sortAlgos.Merge;
+                    break;
+                case "selection":
+                    sortAlgo = sortAlgos.Selection;
                     break;
                 default:
                     System.Console.WriteLine(argAlgo + " is not a valid sorting algorithm.");
@@ -181,7 +187,7 @@ namespace InsertionSort
             return Merge(left, right);
         }
 
-        static List<float> Merge(List<float> left, List<float> right)
+        private static List<float> Merge(List<float> left, List<float> right)
         {
             List<float> result = new List<float>();
 
@@ -211,6 +217,30 @@ namespace InsertionSort
             }
 
             return result;
+        }
+
+        private static List<float> SortSelection(List<float> data)
+        {
+            List<float> sortedList = new List<float>();
+
+            while (data.Count() > 0)
+            {
+                int minIndex = 0;
+                float min = data[minIndex];
+                for (int i = 1; i < data.Count(); i++)
+                {
+                    if (data[i] < min)
+                    {
+                        minIndex = i;
+                        min = data[minIndex];
+                    }
+                }
+
+                sortedList.Add(data[minIndex]);
+                data.RemoveAt(minIndex);
+            }
+
+            return sortedList;
         }
     }
 }
