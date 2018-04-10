@@ -238,9 +238,6 @@ namespace SortProject
             List<float> nums3 = nums;
             merge_sort(nums3, 0, nums3.Count - 1);
             verify(nums3);*/
-
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey(true);
         }
     }
 }
